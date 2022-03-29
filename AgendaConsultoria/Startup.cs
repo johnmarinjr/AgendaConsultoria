@@ -8,6 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using AgendaConsultoria.Data;
 
 namespace AgendaConsultoria
 {
@@ -23,7 +25,13 @@ namespace AgendaConsultoria
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "server=localhost;user=developer;password=1234567;database=agendaconsultoria";
+            var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+
             services.AddControllersWithViews();
+
+            services.AddDbContext<AgendaConsultoriaContext>(options =>
+                    options.UseMySql(connectionString, serverVersion));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
